@@ -14,7 +14,8 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "dotenv -e .env.local -- chromatic"
+    "chromatic": "dotenv -e .env.local -- chromatic",
+    "prepare": "husky"
   },
   "dependencies": {
     "react": "^19.2.8",
@@ -47,6 +48,7 @@
     "eslint-plugin-storybook": "^10.5.10",
     "globals": "^17.11.0",
     "jsdom": "^29.1.1",
+    "husky": "^9.1.7",
     "playwright": "latest",
     "prettier": "^3.9.6",
     "storybook": "^10.5.10",
