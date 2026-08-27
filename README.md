@@ -23,6 +23,9 @@ Starter frontend basé sur React 19, TypeScript et Vite.
 npm install
 ```
 
+Pour publier Storybook avec Chromatic, créez un fichier `.env.local` à partir de
+`.env.example`, puis renseignez votre token de projet Chromatic. Ce fichier est ignoré par Git.
+
 ## Développement
 
 Lancer l'application :
@@ -50,6 +53,7 @@ Storybook est disponible sur `http://localhost:6006`.
 | `npm run preview`         | Sert localement le build de production               |
 | `npm run storybook`       | Lance Storybook                                      |
 | `npm run build-storybook` | Produit le build statique de Storybook               |
+| `npm run chromatic`       | Publie Storybook sur Chromatic                       |
 | `npm run test`            | Exécute les tests une fois                           |
 | `npm run test:watch`      | Lance Vitest en mode watch                           |
 | `npm run lint`            | Vérifie le code avec ESLint                          |
@@ -77,3 +81,5 @@ Storybook est disponible sur `http://localhost:6006`.
 - L'alias `@` pointe vers `src`.
 - Les classes utilitaires Tailwind sont utilisées directement dans les composants.
 - Toute modification peut être vérifiée avec `npm run lint`, `npm run format:check`, `npm run test` et `npm run build`.
+
+En CI, configurez `CHROMATIC_PROJECT_TOKEN` comme secret du fournisseur CI et lancez `npm run chromatic`.
