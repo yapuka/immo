@@ -17,6 +17,10 @@
     "chromatic": "dotenv -e .env.local -- chromatic",
     "prepare": "husky"
   },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --fix",
+    "*.{js,jsx,ts,tsx,json,css,md}": "prettier --write"
+  },
   "dependencies": {
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
@@ -47,8 +51,9 @@
     "eslint-plugin-react-refresh": "^0.5.4",
     "eslint-plugin-storybook": "^10.5.10",
     "globals": "^17.11.0",
-    "jsdom": "^29.1.1",
     "husky": "^9.1.7",
+    "jsdom": "^29.1.1",
+    "lint-staged": "^16.4.0",
     "playwright": "latest",
     "prettier": "^3.9.6",
     "storybook": "^10.5.10",
