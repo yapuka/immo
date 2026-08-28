@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+
+echo "Pre-commit: format, Checkstyle et compilation des tests"
+./mvnw -q spotless:check checkstyle:check test-compile
