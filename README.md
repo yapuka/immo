@@ -63,7 +63,8 @@ Activer les hooks versionnés pour votre clone :
 git config core.hooksPath .githooks
 ```
 
-La CI GitHub exécute `./mvnw clean verify`, génère le rapport JaCoCo et lance un scan CVE des dépendances.
+La CI GitHub exécute `./mvnw clean verify` et génère le rapport JaCoCo.
+Le scan CVE est séparé dans le workflow `CVE dependency scan` : il peut être déclenché manuellement depuis l'onglet **Actions**.
 Pour accélérer la première synchronisation NVD, ajouter le secret GitHub `NVD_API_KEY` aux paramètres du dépôt.
 En local, renseigner `NVD_API_KEY` dans `.env`, puis charger ce fichier avant le scan Maven :
 

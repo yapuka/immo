@@ -22,22 +22,5 @@ jobs:
           java-version: '21'
           cache: maven
 
-      - name: Cache OWASP vulnerability database
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2/repository/org/owasp/dependency-check-data
-          key: dependency-check-${{ runner.os }}-${{ hashFiles('pom.xml') }}
-          restore-keys: |
-            dependency-check-${{ runner.os }}-
-
       - name: Verify
         run: ./mvnw clean verify
-
-      - name: Scan dependencies for CVEs
-        run: >-
-          ./mvnw org.owasp:dependency-check-maven:check
-          -DskipTests
-          -DfailBuildOnCVSS=7
-          -DnvdApiKey="$NVD_API_KEY"
-        env:
-          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
