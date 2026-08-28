@@ -65,19 +65,19 @@ http://localhost:6006
 
 ## Scripts
 
-| Commande | Description |
-| --- | --- |
-| `npm run dev` | Lance le serveur Vite en mode développement |
-| `npm run build` | Vérifie TypeScript et produit le build de production |
-| `npm run preview` | Sert le build de production localement |
-| `npm run storybook` | Ouvre Storybook |
-| `npm run build-storybook` | Génère le build statique Storybook |
-| `npm run chromatic` | Publie Storybook sur Chromatic |
-| `npm run test` | Exécute les tests une fois |
-| `npm run test:watch` | Lance Vitest en mode watch |
-| `npm run lint` | Vérifie le code avec ESLint |
-| `npm run format` | Formate les fichiers avec Prettier |
-| `npm run format:check` | Vérifie le formatage sans modifier les fichiers |
+| Commande                  | Description                                          |
+| ------------------------- | ---------------------------------------------------- |
+| `npm run dev`             | Lance le serveur Vite en mode développement          |
+| `npm run build`           | Vérifie TypeScript et produit le build de production |
+| `npm run preview`         | Sert le build de production localement               |
+| `npm run storybook`       | Ouvre Storybook                                      |
+| `npm run build-storybook` | Génère le build statique Storybook                   |
+| `npm run chromatic`       | Publie Storybook sur Chromatic                       |
+| `npm run test`            | Exécute les tests une fois                           |
+| `npm run test:watch`      | Lance Vitest en mode watch                           |
+| `npm run lint`            | Vérifie le code avec ESLint                          |
+| `npm run format`          | Formate les fichiers avec Prettier                   |
+| `npm run format:check`    | Vérifie le formatage sans modifier les fichiers      |
 
 ## Structure du projet
 
