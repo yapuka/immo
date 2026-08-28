@@ -1,6 +1,6 @@
 ---
 name: unit-testing
-description: "Use when creating, reviewing, debugging, or improving unit and component tests for this TypeScript React project with Vitest and Testing Library. Produces user-focused tests, applies Testing Library best practices, and validates the result."
+description: 'Use when creating, reviewing, debugging, or improving unit and component tests for this TypeScript React project with Vitest and Testing Library. Produces user-focused tests, applies Testing Library best practices, and validates the result.'
 ---
 
 # Tests unitaires et tests de composants
@@ -18,14 +18,21 @@ Ce skill s'applique aux tests unitaires, aux tests de composants React et aux co
 
 Toujours verifier la configuration et les conventions existantes avant d'ecrire un test. Ne pas ajouter de dependance lorsqu'une dependance deja installee suffit.
 
+## Delegation vers les stories Storybook
+
+Charger le skill `storybook-stories` avant d'ecrire le test lorsque le composant n'a pas de story exploitable pour le comportement vise, ou lorsqu'il faut d'abord representer un nouvel etat utilisateur. Le skill appele doit fournir une story stable avec les `args`, fixtures et decorators necessaires; revenir ensuite ici pour ecrire les assertions et valider le test.
+
+Un `play` Storybook peut preparer ou verifier un scenario interactif, mais il ne remplace pas les tests Vitest lorsque ceux-ci sont requis par le comportement ou la couverture attendue.
+
 ## Workflow obligatoire
 
 1. Identifier le comportement observable a proteger et le fichier qui le controle.
 2. Lire le composant, ses types, ses dependances et les tests voisins avant de choisir les cas de test.
 3. Decrire les scenarios utilisateur importants: etat initial, action, resultat visible, erreurs et transitions asynchrones.
-4. Ecrire le test au niveau de l'interface publique du composant ou de la fonction. Ne pas tester les details d'implementation internes.
-5. Executer le test cible, puis le lint et la suite complete si la modification peut affecter d'autres tests.
-6. Si un test echoue, corriger le comportement ou le test selon la cause reelle. Ne pas affaiblir les assertions pour faire passer la suite.
+4. Si aucune story ne represente l'etat necessaire, charger `storybook-stories` et creer cette story avant le test.
+5. Ecrire le test au niveau de l'interface publique du composant ou de la fonction. Ne pas tester les details d'implementation internes.
+6. Executer le test cible, puis le lint et la suite complete si la modification peut affecter d'autres tests.
+7. Si un test echoue, corriger le comportement ou le test selon la cause reelle. Ne pas affaiblir les assertions pour faire passer la suite.
 
 ## Principes de qualite
 
