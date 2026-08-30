@@ -1,40 +1,37 @@
 # Immo Monorepo
 
-Application immobilière organisée en monorepo avec :
-- un backend Spring Boot
-- un frontend React + Vite
-- une base MongoDB locale ou via Docker
+Application immobilière organisée en architecture hexagonale au sein d’un monorepo :
+- backend Spring Boot avec modules de domaine, service, infrastructure et web
+- frontend React + Vite
+- base MongoDB pour le stockage
+- orchestration locale via Docker Compose ou par scripts npm
 
-## Structure
+## Structure du projet
 
 ```text
 .
-├── backend/                # API Spring Boot
-├── frontend/               # SPA React/Vite
-├── .env.example            # variables globales du monorepo
-├── docker-compose.yml      # MongoDB + backend + frontend
+├── backend/                # API Spring Boot et modules hexagonaux
+│   ├── common/
+│   ├── domain/
+│   ├── infrastructure/
+│   ├── service/
+│   ├── web/
+│   ├── Dockerfile
+│   ├── pom.xml
+│   └── mvnw
+├── frontend/               # application React/Vite
+│   ├── Dockerfile
+│   └── package.json
+├── scripts/
+│   ├── dev.sh
+│   └── check-ports.sh
+├── docker-compose.yml      # MongoDB + Mongo Express + backend + frontend
 ├── package.json            # scripts racine
-├── README.md               # documentation
-├── .gitignore              # fichiers locaux non versionnés
-└── scripts/
-    ├── dev.sh
-    └── check-ports.sh
+├── .env.example            # variables globales Docker
+├── README.md
+├── .gitignore
+└── .env                    # local override non versionné
 ```
-
-## Quick start
-
-```bash
-cp .env.example .env
-cp backend/.env.example backend/.env
-cp frontend/.env.example frontend/.env
-npm install
-npm run dev
-```
-
-Accès rapides :
-- Frontend : http://localhost:5173
-- Backend : http://localhost:8080
-- Mongo Express : http://localhost:8081
 
 ## Prérequis
 
@@ -43,10 +40,41 @@ Accès rapides :
 - npm
 - Docker Desktop ou Docker Engine
 
+## Quick start
+
+1. Créez les variables locales si nécessaire :
+
+```bash
+cp .env.example .env
+```
+
+2. Installez les dépendances :
+
+```bash
+npm install
+```
+
+3. Démarrez l’environnement de développement :
+
+```bash
+npm run dev
+```
+
+Cela lance automatiquement :
+- MongoDB
+- Mongo Express
+- le backend Spring Boot
+- le frontend Vite
+
+Accès rapides :
+- Frontend : http://localhost:5173
+- Backend : http://localhost:8080
+- Mongo Express : http://localhost:8081
+
 ## Variables d’environnement
 
 ### Fichier racine
-Le fichier [.env.example](.env.example) contient les variables utilisées par Docker Compose et par le monorepo :
+Le fichier [.env.example](.env.example) contient les variables de base utilisées par Docker Compose :
 
 ```env
 MONGODB_DATABASE=immo
@@ -58,57 +86,22 @@ FRONTEND_PORT=80
 FRONTEND_API_URL=http://localhost:8080
 ```
 
-### Backend
-Le fichier [backend/.env.example](backend/.env.example) contient :
-
-```env
-SPRING_DATA_MONGODB_URI=mongodb://root:secretpassword@localhost:27017/immo?authSource=admin
-SERVER_PORT=8080
-```
-
-### Frontend
-Le fichier [frontend/.env.example](frontend/.env.example) contient :
-
-```env
-VITE_API_URL=http://localhost:8080
-```
-
-> Les fichiers `.env` réels ne doivent pas être commités. Copiez les `.env.example` localement avant de lancer le projet.
+> Les valeurs réelles peuvent être surchargées localement dans un fichier `.env` non versionné.
 
 ## Démarrage local
 
-Avant de lancer le projet, crée les fichiers d’environnement locaux :
+### Mode développement intégral
 
 ```bash
-cp .env.example .env
-cp backend/.env.example backend/.env
-cp frontend/.env.example frontend/.env
-```
-
-Puis installe les dépendances et lance la stack locale :
-
-```bash
-npm install
 npm run dev
 ```
 
-> Le script racine `npm run dev` démarre automatiquement MongoDB + Mongo Express, puis le backend et le frontend via `concurrently`.
+Le script `dev` démarre les services via `concurrently` :
+- `docker compose up -d mongodb mongo-express`
+- `./mvnw spring-boot:run` dans le module backend `web`
+- `npm run dev --prefix frontend`
 
-### Authentification Mongo Express
-
-Mongo Express est protégé par un login web dédié :
-
-- utilisateur : `admin`
-- mot de passe : `pass`
-
-Les identifiants MongoDB de la base restent :
-
-- utilisateur : `root`
-- mot de passe : `secretpassword`
-
-### Démarrage séparé des services
-
-Vous pouvez aussi lancer les composants un par un :
+### Services séparés
 
 ```bash
 npm run dev:mongodb
@@ -116,42 +109,45 @@ npm run dev:backend
 npm run dev:frontend
 ```
 
-ou directement via Docker Compose :
+### Docker Compose
 
 ```bash
-docker compose up -d mongodb mongo-express
+docker compose up --build
 ```
+
+La stack Docker inclut :
+- MongoDB sur http://localhost:27017
+- Mongo Express sur http://localhost:8081
+- backend sur http://localhost:8080
+- frontend sur http://localhost:80
 
 ## Scripts disponibles
 
 ```bash
-npm run dev          # MongoDB + Mongo Express + backend + frontend
+npm run dev          # démarre MongoDB + Mongo Express + backend + frontend
 npm run dev:mongodb  # MongoDB + Mongo Express
 npm run dev:backend  # backend seul
 npm run dev:frontend # frontend seul
-npm run ports:check  # vérifie les ports du projet (27017, 8080, 8081, 5173, 80)
+npm run ports:check  # vérifie les ports du projet
 npm run ports:free   # libère les ports du projet
 npm run build        # build backend + frontend
-npm run docker:up    # démarre toute la stack Docker Compose
-npm run docker:down  # arrête et nettoie la stack Docker
+npm run docker:up    # démarre la stack Docker Compose
+npm run docker:down  # stoppe et nettoie la stack Docker
 ```
 
-## Docker Compose
+## Authentification Mongo Express
 
-```bash
-cp .env.example .env
-npm run docker:up
-```
+Mongo Express est protégé par un compte dédié :
+- utilisateur : `admin`
+- mot de passe : `pass`
 
-La stack Docker démarre :
-- MongoDB sur http://localhost:27017
-- Mongo Express sur http://localhost:8081
-- le backend sur http://localhost:8080
-- le frontend sur http://localhost:80
+Les identifiants MongoDB sont :
+- utilisateur : `root`
+- mot de passe : `secretpassword`
 
-## Troubleshooting rapide
+## Troubleshooting
 
-### Vérifier si les ports du projet sont libres
+### Vérifier les ports
 
 ```bash
 npm run ports:check
@@ -163,30 +159,41 @@ npm run ports:check
 npm run ports:free
 ```
 
-### Si Docker / Mongo ne démarre pas correctement
+### Si Docker ne démarre pas
 
 ```bash
 docker compose ps
 docker logs mongo-ui
 docker logs monorepo-mongodb
+docker logs monorepo-backend
 ```
 
-### Si Mongo Express demande un login
+### Si le backend Docker ne démarre pas
 
-Utilisez :
-
-- utilisateur : `admin`
-- mot de passe : `pass`
-
-### Si la base Mongo ne répond pas
+Le conteneur backend construit maintenant le jar Maven à partir du module `web` avec une étape multi-étapes. Si le build échoue, vérifiez que le module `backend/web` est bien présent et que Maven peut créer le jar :
 
 ```bash
-docker compose up -d mongodb
+cd backend
+./mvnw -pl web -am package -DskipTests
 ```
 
-Ensuite, relancez la stack locale :
+### Si le frontend Docker ne s’affiche pas correctement
+
+Le frontend est servi par Nginx sur le port 80. Vérifiez la build du frontend :
 
 ```bash
-npm run dev
+cd frontend
+npm run build
 ```
+
+## Notes d’architecture
+
+Le backend suit une séparation claire en couches hexagonales :
+- `common` : utilitaires transverses
+- `domain` : modèle métier et règles
+- `service` : cas d’usage
+- `infrastructure` : adaptateurs techniques (MongoDB, sécurité, etc.)
+- `web` : API REST et point d’entrée Spring Boot
+
+Cette séparation vise à isoler le cœur métier des dépendances techniques et à faciliter la maintenance et l’évolution du projet.
 
