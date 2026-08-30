@@ -27,7 +27,7 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>25</java.version>
 		<checkstyle.version>10.21.4</checkstyle.version>
 		<dependency-check.version>12.1.0</dependency-check.version>
 		<jacoco.version>0.8.13</jacoco.version>

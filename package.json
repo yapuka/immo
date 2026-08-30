@@ -1,0 +1,20 @@
+{
+  "name": "immo-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "install:all": "npm install --prefix frontend && cd backend && ./mvnw -q dependency:go-offline",
+    "dev:mongodb": "docker compose up -d mongodb mongo-express",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "cd backend && ./mvnw spring-boot:run",
+    "dev": "bash ./scripts/dev.sh",
+    "ports:check": "bash ./scripts/check-ports.sh",
+    "ports:free": "lsof -nP -iTCP:27017 -sTCP:LISTEN -t | xargs -r kill; lsof -nP -iTCP:8080 -sTCP:LISTEN -t | xargs -r kill; lsof -nP -iTCP:8081 -sTCP:LISTEN -t | xargs -r kill; lsof -nP -iTCP:5173 -sTCP:LISTEN -t | xargs -r kill; lsof -nP -iTCP:80 -sTCP:LISTEN -t | xargs -r kill",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down -v",
+    "build": "cd backend && ./mvnw -q -DskipTests package && cd ../frontend && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  }
+}
