@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+
+echo "Pre-push: execution de la suite de tests"
+./mvnw -q clean test
