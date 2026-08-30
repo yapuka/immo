@@ -1,0 +1,5 @@
+com/immo/apiweb/health/HealthController.class
+com/immo/apiweb/user/UserCreateRequest.class
+com/immo/apiweb/user/UserController.class
+com/immo/apiweb/user/UserResponse.class
+com/immo/apiweb/ImmoApiApplication.class
