@@ -1,23 +1,40 @@
-# IDEs
+# IDEs & Éditeurs
 .idea/
 .vscode/
+*.swp
+*.swo
 
-# Local env files
+# OS
+.DS_Store
+Thumbs.db
+
+# Fichiers d'environnement (backend, frontend et racine)
 .env
-.env.local
-*.local
+.env.*
+!.env.example
 **/.env
 **/.env.*
 !**/.env.example
 
-# Core dependencies
-node_modules/
-backend/target/
-backend/immo-api/
-frontend/dist/
-frontend/node_modules/
+# Build Java / Maven (couvre la racine et TOUS les sous-modules)
+**/target/
+target/
+*.class
+*.jar
+*.war
 
-# OS / editor
-.DS_Store
-*.swp
-*.swo
+# Build Frontend / Node
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+build/
+**/build/
+.nlx/
+.cache/
+
+# Logs Maven / npm
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
