@@ -12,5 +12,8 @@
 *.iml
 *.ipr
 
+# Dependency directories
+node_modules/
+
 # migration
 specs.md
