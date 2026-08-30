@@ -6,13 +6,13 @@
 
     <parent>
         <groupId>com.immo</groupId>
-        <artifactId>immo-parent</artifactId>
+        <artifactId>parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>immo-common</artifactId>
-    <name>immo-common</name>
+    <artifactId>common</artifactId>
+    <name>common</name>
 
     <dependencies>
         <dependency>
