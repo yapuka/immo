@@ -10,7 +10,7 @@ backend/
 ├── domain/          # modèle métier et règles de domaine
 ├── service/         # cas d'usage applicatifs
 ├── infrastructure/  # adaptateurs techniques (MongoDB, sécurité, etc.)
-├── web/             # API REST et point d'entrée Spring Boot
+├── exposition/             # API REST et point d'entrée Spring Boot
 ├── pom.xml
 ├── mvnw
 ├── Dockerfile
@@ -35,7 +35,7 @@ Ou directement dans le backend :
 
 ```bash
 cd backend
-./mvnw -pl web -am spring-boot:run
+./mvnw -pl exposition -am spring-boot:run
 ```
 
 L’API est ensuite accessible sur :
@@ -48,13 +48,13 @@ http://localhost:8080
 
 ```bash
 cd backend
-./mvnw -pl web -am package -DskipTests
+./mvnw -pl exposition -am package -DskipTests
 ```
 
 Le jar généré est produit dans :
 
 ```text
-backend/web/target/web-0.0.1-SNAPSHOT.jar
+backend/exposition/target/exposition-0.0.1-SNAPSHOT.jar
 ```
 
 ## Variables d’environnement
@@ -79,6 +79,6 @@ docker compose up --build backend
 
 ## Points de vigilance
 
-- Le point d’entrée Spring Boot est le module `web`.
+- Le point d’entrée Spring Boot est le module `exposition`.
 - L’architecture hexagonale impose de maintenir la séparation entre métier, use cases et infrastructure.
-- Les dépendances techniques doivent rester concentrées dans `infrastructure` et `web`.
+- Les dépendances techniques doivent rester concentrées dans `infrastructure` et `exposition`.

@@ -14,7 +14,7 @@
         <module>domain</module>
         <module>service</module>
         <module>infrastructure</module>
-        <module>web</module>
+        <module>exposition</module>
     </modules>
 
     <properties>

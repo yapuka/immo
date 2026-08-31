@@ -1,7 +1,7 @@
 # Immo Monorepo
 
 Application immobilière organisée en architecture hexagonale au sein d’un monorepo :
-- backend Spring Boot avec modules de domaine, service, infrastructure et web
+- backend Spring Boot avec modules de domaine, service, infrastructure et exposition
 - frontend React + Vite
 - base MongoDB pour le stockage
 - orchestration locale via Docker Compose ou par scripts npm
@@ -13,9 +13,9 @@ Application immobilière organisée en architecture hexagonale au sein d’un mo
 ├── backend/                # API Spring Boot et modules hexagonaux
 │   ├── common/
 │   ├── domain/
+│   ├── exposition/
 │   ├── infrastructure/
 │   ├── service/
-│   ├── web/
 │   ├── Dockerfile
 │   ├── pom.xml
 │   └── mvnw
@@ -98,7 +98,7 @@ npm run dev
 
 Le script `dev` démarre les services via `concurrently` :
 - `docker compose up -d mongodb mongo-express`
-- `./mvnw spring-boot:run` dans le module backend `web`
+- `./mvnw spring-boot:run` dans le module backend `exposition`
 - `npm run dev --prefix frontend`
 
 ### Services séparés
@@ -170,11 +170,11 @@ docker logs monorepo-backend
 
 ### Si le backend Docker ne démarre pas
 
-Le conteneur backend construit maintenant le jar Maven à partir du module `web` avec une étape multi-étapes. Si le build échoue, vérifiez que le module `backend/web` est bien présent et que Maven peut créer le jar :
+Le conteneur backend construit maintenant le jar Maven à partir du module `exposition` avec une étape multi-étapes. Si le build échoue, vérifiez que le module `backend/exposition` est bien présent et que Maven peut créer le jar :
 
 ```bash
 cd backend
-./mvnw -pl web -am package -DskipTests
+./mvnw -pl exposition -am package -DskipTests
 ```
 
 ### Si le frontend Docker ne s’affiche pas correctement
@@ -193,7 +193,7 @@ Le backend suit une séparation claire en couches hexagonales :
 - `domain` : modèle métier et règles
 - `service` : cas d’usage
 - `infrastructure` : adaptateurs techniques (MongoDB, sécurité, etc.)
-- `web` : API REST et point d’entrée Spring Boot
+- `exposition` : API REST et point d’entrée Spring Boot
 
 Cette séparation vise à isoler le cœur métier des dépendances techniques et à faciliter la maintenance et l’évolution du projet.
 
