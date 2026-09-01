@@ -1,0 +1,40 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - '../../backend'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - '../../backend'
+
+jobs:
+  build-backend:
+    name: Build Backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check changes in backend
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+
+      - name: Set up JDK 25
+        if: steps.filter.outputs.backend == 'true'
+        uses: actions/setup-java@v4
+        with:
+          java-version: 25
+          distribution: temurin
+          cache: maven
+
+      - name: Verify backend modules
+        if: steps.filter.outputs.backend == 'true'
+        run: |
+          cd backend
+          ./mvnw clean verify

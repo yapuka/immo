@@ -1,11 +1,7 @@
-name: Frontend - Chromatic
+name: Frontend Chromatic
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main, master]
-    paths:
-      - 'frontend/**'
 
 permissions:
   contents: read
